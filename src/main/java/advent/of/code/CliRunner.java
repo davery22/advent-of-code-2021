@@ -1,0 +1,39 @@
+package advent.of.code;
+
+import advent.of.code.day01.Day01;
+import advent.of.code.day02.Day02;
+import advent.of.code.day03.Day03;
+import advent.of.code.day04.Day04;
+import advent.of.code.io.Input;
+import advent.of.code.io.Output;
+
+import java.io.IOException;
+import java.util.Arrays;
+
+public class CliRunner {
+    public static void main(String[] args) throws Throwable {
+        var out = Output.of(System.out);
+//        try (var in = Input.of(Day01.class, "input.txt")) { Day01.part1(in, out); }
+//        try (var in = Input.of(Day01.class, "input.txt")) { Day01.part2(in, out); }
+//        try (var in = Input.of(Day02.class, "input.txt")) { Day02.part1(in, out); }
+//        try (var in = Input.of(Day02.class, "input.txt")) { Day02.part2(in, out); }
+//        try (var in = Input.of(Day03.class, "input.txt")) { Day03.part1(in, out); }
+//        try (var in = Input.of(Day03.class, "input.txt")) { Day03.part2(in, out); }
+        try (var in = Input.of(Day04.class, "input.txt")) { Day04.part1(in, out); }
+        try (var in = Input.of(Day04.class, "input.txt")) { Day04.part2(in, out); }
+    }
+    
+    /**
+     * Returns an Input piped from the output of a curl command stored in a text file.
+     * ...Which I still have to manually overwrite periodically (by copying from my browser), since the curl uses a
+     * cookie with expiring session keys, and I'm too lazy to code the session handshakes myself.
+     */
+    private static Input curl() throws IOException {
+        try (var curl = Input.of(CliRunner.class, "curl.txt")) {
+            String[] cmd = curl.lines()
+                .flatMap(line -> Arrays.stream(line.replaceAll("'|\\\\", "").trim().split(" ", 2)))
+                .toArray(String[]::new);
+            return Input.of(new ProcessBuilder(cmd).start().getInputStream());
+        }
+    }
+}
