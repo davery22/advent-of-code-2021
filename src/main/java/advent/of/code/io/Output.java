@@ -1,12 +1,13 @@
 package advent.of.code.io;
 
-import java.io.IOException;
 import java.io.OutputStream;
 
 public interface Output extends AutoCloseable {
-    void write(Object x) throws IOException;
-    void writeln(Object x) throws IOException;
-    void close() throws IOException;
+    Output write(Object x);
+    Output writef(String format, Object... args);
+    Output writeln(Object x);
+    Output writeln();
+    void close();
     
     static Output of(OutputStream out) {
         return new OutputImpl(out);

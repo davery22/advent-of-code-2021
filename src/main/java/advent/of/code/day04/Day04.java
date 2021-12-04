@@ -3,7 +3,6 @@ package advent.of.code.day04;
 import advent.of.code.io.Input;
 import advent.of.code.io.Output;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.stream.IntStream;
 
@@ -11,7 +10,7 @@ public class Day04 {
     // This solution makes destructive updates to the boards using a special value (Integer.MAX_VALUE).
     // But we got away with it... phew.
     
-    public static void part1(Input in, Output out) throws IOException {
+    public static void part1(Input in, Output out) {
         var draws = parseDraws(in);
         var boards = parseBoards(in);
         for (var draw : draws) {
@@ -25,7 +24,7 @@ public class Day04 {
         }
     }
     
-    public static void part2(Input in, Output out) throws IOException {
+    public static void part2(Input in, Output out) {
         var draws = parseDraws(in);
         var boards = parseBoards(in);
         var winners = new HashSet<Integer>();
@@ -43,13 +42,13 @@ public class Day04 {
         out.writeln(scores.get(scores.size()-1));
     }
     
-    private static int[] parseDraws(Input in) throws IOException {
+    private static int[] parseDraws(Input in) {
         return Arrays.stream(in.readLine().split(","))
             .mapToInt(Integer::parseInt)
             .toArray();
     }
     
-    private static List<int[][]> parseBoards(Input in) throws IOException {
+    private static List<int[][]> parseBoards(Input in) {
         var boards = new ArrayList<int[][]>();
         while (in.readLine() != null) { // Discard blank lines
             var board = in.lines().limit(5)

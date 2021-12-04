@@ -1,13 +1,14 @@
 package advent.of.code.io;
 
-import java.io.IOException;
 import java.io.InputStream;
+import java.util.Scanner;
 import java.util.stream.Stream;
 
 public interface Input extends AutoCloseable {
-    String readLine() throws IOException;
+    String readLine();
     Stream<String> lines();
-    void close() throws IOException;
+    Scanner scanner();
+    void close();
     
     static Input of(InputStream in) {
         return new InputImpl(in);

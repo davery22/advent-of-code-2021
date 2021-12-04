@@ -3,10 +3,8 @@ package advent.of.code.day02;
 import advent.of.code.io.Input;
 import advent.of.code.io.Output;
 
-import java.io.IOException;
-
 public class Day02 {
-    public static void part1(Input in, Output out) throws IOException {
+    public static void part1(Input in, Output out) {
         class Position { int horizontal = 0; int depth = 0; }
         Position pos = new Position();
         in.lines().map(line -> line.split(" ")).forEach(cmd -> {
@@ -20,7 +18,7 @@ public class Day02 {
         out.writeln(pos.horizontal * pos.depth);
     }
     
-    public static void part2(Input in, Output out) throws IOException {
+    public static void part2(Input in, Output out) {
         class Position { int horizontal = 0; int depth = 0; int aim = 0; }
         Position pos = new Position();
         in.lines().map(line -> line.split(" ")).forEach(cmd -> {

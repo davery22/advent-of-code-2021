@@ -1,44 +1,36 @@
 package advent.of.code.io;
 
 import java.io.*;
+import java.util.Scanner;
 import java.util.stream.Stream;
 
 /**
  * Convenience wrapper over any InputStream.
  */
 class InputImpl implements Input {
-    private final InputStream in;
-    private BufferedReader reader;
+    private final Scanner scanner;
     
     public InputImpl(InputStream in) {
-        this.in = in;
+        this.scanner = new Scanner(in);
     }
     
     @Override
-    public String readLine() throws IOException {
-        return getReader().readLine();
+    public String readLine() {
+        return scanner.hasNextLine() ? scanner.nextLine() : null;
     }
     
     @Override
     public Stream<String> lines() {
-        return getReader().lines();
+        return scanner.useDelimiter(IO.EOL).tokens();
     }
     
     @Override
-    public void close() throws IOException {
-        if (reader == null) {
-            in.close();
-        } else {
-            try (var ignored = reader) {
-                in.close();
-            }
-        }
+    public Scanner scanner() {
+        return scanner;
     }
     
-    private BufferedReader getReader() {
-        if (reader == null) {
-            reader = new BufferedReader(new InputStreamReader(in));
-        }
-        return reader;
+    @Override
+    public void close() {
+        scanner.close();
     }
 }

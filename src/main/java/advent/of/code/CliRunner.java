@@ -12,16 +12,16 @@ import java.io.IOException;
 import java.util.Arrays;
 
 public class CliRunner {
-    public static void main(String[] args) throws Throwable {
+    public static void main(String[] args) {
         var out = Output.of(System.out);
-//        try (var in = Input.of(Day01.class, "input.txt")) { Day01.part1(in, out); }
-//        try (var in = Input.of(Day01.class, "input.txt")) { Day01.part2(in, out); }
-//        try (var in = Input.of(Day02.class, "input.txt")) { Day02.part1(in, out); }
-//        try (var in = Input.of(Day02.class, "input.txt")) { Day02.part2(in, out); }
-//        try (var in = Input.of(Day03.class, "input.txt")) { Day03.part1(in, out); }
-//        try (var in = Input.of(Day03.class, "input.txt")) { Day03.part2(in, out); }
-//        try (var in = Input.of(Day04.class, "input.txt")) { Day04.part1(in, out); }
-//        try (var in = Input.of(Day04.class, "input.txt")) { Day04.part2(in, out); }
+        try (var in = Input.of(Day01.class, "input.txt")) { Day01.part1(in, out); }
+        try (var in = Input.of(Day01.class, "input.txt")) { Day01.part2(in, out); }
+        try (var in = Input.of(Day02.class, "input.txt")) { Day02.part1(in, out); }
+        try (var in = Input.of(Day02.class, "input.txt")) { Day02.part2(in, out); }
+        try (var in = Input.of(Day03.class, "input.txt")) { Day03.part1(in, out); }
+        try (var in = Input.of(Day03.class, "input.txt")) { Day03.part2(in, out); }
+        try (var in = Input.of(Day04.class, "input.txt")) { Day04.part1(in, out); }
+        try (var in = Input.of(Day04.class, "input.txt")) { Day04.part2(in, out); }
         try (var in = Input.of(Day05.class, "input.txt")) { Day05.part1(in, out); }
         try (var in = Input.of(Day05.class, "input.txt")) { Day05.part2(in, out); }
     }

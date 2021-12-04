@@ -3,14 +3,13 @@ package advent.of.code.day03;
 import advent.of.code.io.Input;
 import advent.of.code.io.Output;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Day03 {
-    public static void part1(Input in, Output out) throws IOException {
+    public static void part1(Input in, Output out) {
         var freqs = new int[12];
         in.lines().forEach(binary -> {
             for (var i = 0; i < 12; i++) {
@@ -30,7 +29,7 @@ public class Day03 {
         out.writeln(powerConsumption);
     }
     
-    public static void part2(Input in, Output out) throws IOException {
+    public static void part2(Input in, Output out) {
         var lines = in.lines().toList();
         var oxygenRating      = getRating(lines, '1', '0');
         var co2ScrubberRating = getRating(lines, '0', '1');

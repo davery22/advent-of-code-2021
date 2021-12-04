@@ -1,35 +1,46 @@
 package advent.of.code.io;
 
-import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.Objects;
+import java.io.PrintStream;
 
 /**
  * Convenience wrapper over any OutputStream.
  */
 class OutputImpl implements Output {
-    private final OutputStream out;
+    private final PrintStream printer;
     
     public OutputImpl(OutputStream out) {
-        this.out = out;
+        this.printer = new PrintStream(out);
     }
     
     @Override
-    public void write(Object x) throws IOException {
-        out.write(Objects.toString(x).getBytes(StandardCharsets.UTF_8));
+    public OutputImpl write(Object x) {
+        printer.print(x);
+        return this;
     }
     
     @Override
-    public void writeln(Object x) throws IOException {
-        write(x);
-        write(System.lineSeparator());
+    public OutputImpl writef(String format, Object... args) {
+        printer.printf(format, args);
+        return this;
     }
     
     @Override
-    public void close() throws IOException {
-        try (out) {
-            out.flush();
+    public OutputImpl writeln(Object x) {
+        printer.println(x);
+        return this;
+    }
+    
+    @Override
+    public OutputImpl writeln() {
+        printer.println();
+        return this;
+    }
+    
+    @Override
+    public void close() {
+        try (printer) {
+            printer.flush();
         }
     }
 }
