@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.util.stream.Stream;
 
 public interface Input extends AutoCloseable {
+    String readLine() throws IOException;
     Stream<String> lines();
     void close() throws IOException;
     

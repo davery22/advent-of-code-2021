@@ -7,33 +7,38 @@ import java.util.stream.Stream;
  * Convenience wrapper over any InputStream.
  */
 class InputImpl implements Input {
-    @FunctionalInterface
-    private interface Closer {
-        void run() throws IOException;
-    }
-    
     private final InputStream in;
-    private Closer onClose;
+    private BufferedReader reader;
     
     public InputImpl(InputStream in) {
         this.in = in;
-        this.onClose = in::close;
+    }
+    
+    @Override
+    public String readLine() throws IOException {
+        return getReader().readLine();
     }
     
     @Override
     public Stream<String> lines() {
-        var reader = new BufferedReader(new InputStreamReader(in));
-        var prevClose = onClose;
-        onClose = () -> {
-            try (reader) {
-                prevClose.run();
-            }
-        };
-        return reader.lines();
+        return getReader().lines();
     }
     
     @Override
     public void close() throws IOException {
-        onClose.run();
+        if (reader == null) {
+            in.close();
+        } else {
+            try (var ignored = reader) {
+                in.close();
+            }
+        }
+    }
+    
+    private BufferedReader getReader() {
+        if (reader == null) {
+            reader = new BufferedReader(new InputStreamReader(in));
+        }
+        return reader;
     }
 }
