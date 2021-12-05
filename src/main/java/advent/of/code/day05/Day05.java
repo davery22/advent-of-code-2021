@@ -4,7 +4,6 @@ import advent.of.code.io.Input;
 import advent.of.code.io.Output;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicIntegerArray;
 import java.util.stream.IntStream;
@@ -15,7 +14,7 @@ public class Day05 {
     
     public static void part1(Input in, Output out) {
         var overlap = new AtomicInteger(0);
-        var matrix = IntStream.range(0, 1000).mapToObj(i -> new AtomicIntegerArray(1000)).toList();
+        var matrix = initMatrix(1000, 1000);
         in.lines().parallel()
             .map(Day05::parseLine)
             .forEach(line -> {
@@ -30,7 +29,7 @@ public class Day05 {
     
     public static void part2(Input in, Output out) {
         var overlap = new AtomicInteger(0);
-        var matrix = IntStream.range(0, 1000).mapToObj(i -> new AtomicIntegerArray(1000)).toList();
+        var matrix = initMatrix(1000, 1000);
         in.lines().parallel()
             .map(Day05::parseLine)
             .forEach(line -> {
@@ -49,6 +48,12 @@ public class Day05 {
         Line reverse() { return new Line(x2, y2, x1, y1); }
     }
     
+    private static AtomicIntegerArray[] initMatrix(int x, int y) {
+        return IntStream.range(0, x)
+            .mapToObj(i -> new AtomicIntegerArray(y))
+            .toArray(AtomicIntegerArray[]::new);
+    }
+    
     private static Line parseLine(String line) {
         var arr = Arrays.stream(line.split(" -> "))
             .flatMapToInt(point -> Arrays.stream(point.split(",")).mapToInt(Integer::parseInt))
@@ -56,32 +61,32 @@ public class Day05 {
         return new Line(arr[0], arr[1], arr[2], arr[3]);
     }
     
-    private static void drawVertical(AtomicInteger overlap, List<AtomicIntegerArray> matrix, Line line) {
+    private static void drawVertical(AtomicInteger overlap, AtomicIntegerArray[] matrix, Line line) {
         if (line.y1 > line.y2)
             line = line.reverse();
         for (var i = 0; line.y1+i <= line.y2; i++)
-            if (matrix.get(line.x1).getAndIncrement(line.y1+i) == 1)
+            if (matrix[line.x1].getAndIncrement(line.y1+i) == 1)
                 overlap.getAndIncrement();
     }
     
-    private static void drawHorizontal(AtomicInteger overlap, List<AtomicIntegerArray> matrix, Line line) {
+    private static void drawHorizontal(AtomicInteger overlap, AtomicIntegerArray[] matrix, Line line) {
         if (line.x1 > line.x2)
             line = line.reverse();
         for (var i = 0; line.x1+i <= line.x2; i++)
-            if (matrix.get(line.x1+i).getAndIncrement(line.y1) == 1)
+            if (matrix[line.x1+i].getAndIncrement(line.y1) == 1)
                 overlap.getAndIncrement();
     }
     
-    private static void drawDiagonal(AtomicInteger overlap, List<AtomicIntegerArray> matrix, Line line) {
+    private static void drawDiagonal(AtomicInteger overlap, AtomicIntegerArray[] matrix, Line line) {
         if (line.x1 > line.x2)
             line = line.reverse();
         if (line.y1 < line.y2) { // Looks like '/'
             for (var i = 0; line.x1+i <= line.x2; i++)
-                if (matrix.get(line.x1+i).getAndIncrement(line.y1+i) == 1)
+                if (matrix[line.x1+i].getAndIncrement(line.y1+i) == 1)
                     overlap.getAndIncrement();
         } else { // Looks like '\'
             for (var i = 0; line.x1+i <= line.x2; i++)
-                if (matrix.get(line.x1+i).getAndIncrement(line.y1-i) == 1)
+                if (matrix[line.x1+i].getAndIncrement(line.y1-i) == 1)
                     overlap.getAndIncrement();
         }
     }
