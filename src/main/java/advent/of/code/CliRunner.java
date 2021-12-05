@@ -5,6 +5,7 @@ import advent.of.code.day02.Day02;
 import advent.of.code.day03.Day03;
 import advent.of.code.day04.Day04;
 import advent.of.code.day05.Day05;
+import advent.of.code.day06.Day06;
 import advent.of.code.io.Input;
 import advent.of.code.io.Output;
 
@@ -24,6 +25,8 @@ public class CliRunner {
         try (var in = Input.of(Day04.class, "input.txt")) { Day04.part2(in, out); }
         try (var in = Input.of(Day05.class, "input.txt")) { Day05.part1(in, out); }
         try (var in = Input.of(Day05.class, "input.txt")) { Day05.part2(in, out); }
+        try (var in = Input.of(Day06.class, "input.txt")) { Day06.part1(in, out); }
+        try (var in = Input.of(Day06.class, "input.txt")) { Day06.part2(in, out); }
     }
     
     /**
