@@ -6,6 +6,7 @@ import advent.of.code.day03.Day03;
 import advent.of.code.day04.Day04;
 import advent.of.code.day05.Day05;
 import advent.of.code.day06.Day06;
+import advent.of.code.day07.Day07;
 import advent.of.code.io.Input;
 import advent.of.code.io.Output;
 import com.sun.net.httpserver.HttpExchange;
@@ -22,14 +23,18 @@ import java.util.function.BiConsumer;
 
 public class HttpRunner {
     public void run() throws IOException {
+        var host = "localhost";
+        var port = 8080;
+        var basePath = "http://%s:%d".formatted(host, port);
         var server = HttpServer.create();
-        server.bind(new InetSocketAddress("localhost", 8080), 0);
-        var basePath = "http://%s:%d".formatted(server.getAddress().getHostName(), server.getAddress().getPort());
-        
+        server.bind(new InetSocketAddress(host, port), 0);
+    
+        // Note: Paths like "/foo/bar/" will capture requests like "/foo/bar/anything/else/".
+        // This is useful to support things like query params, but needs to be considered to avoid capturing nonsense.
         server.createContext("/", exchange -> {
             try (exchange) {
                 consumeInput(exchange.getRequestBody());
-                if (!exchange.getHttpContext().getPath().equals(exchange.getRequestURI().toString())) {
+                if (!getRequestSuffix(exchange).isEmpty()) {
                     sendResponse(exchange, 404, simpleHtmlMessage(
                         "404 Not Found",
                         "No context found for request"
@@ -41,7 +46,7 @@ public class HttpRunner {
                     ));
                 } else {
                     sendResponse(exchange, 200, simpleHtmlMessage(
-                        "Welcome to my AoC server!",
+                        "Welcome to my Advent of Code 2021 server!",
                         "Try POST-ing a well-formed input to any endpoint (eg <a href=\"%s/day/1/part1/\">%s/day/1/part1/</a>)".formatted(basePath, basePath)
                     ));
                 }
@@ -59,6 +64,8 @@ public class HttpRunner {
         server.createContext("/day/5/part2/", handler(Day05::part2));
         server.createContext("/day/6/part1/", handler(Day06::part1));
         server.createContext("/day/6/part2/", handler(Day06::part2));
+        server.createContext("/day/7/part1/", handler(Day07::part1));
+        server.createContext("/day/7/part2/", handler(Day07::part2));
         
         server.setExecutor(Executors.newVirtualThreadPerTaskExecutor());
         server.start();
@@ -77,8 +84,7 @@ public class HttpRunner {
     private HttpHandler handler(BiConsumer<Input, Output> solver) {
         return exchange -> {
             try (exchange) {
-                // Without this, endpoints like "/foo/bar/" would match requests like "/foo/bar/anything/else/".
-                if (!exchange.getHttpContext().getPath().equals(exchange.getRequestURI().toString())) {
+                if (!getRequestSuffix(exchange).isEmpty()) {
                     sendResponse(exchange, 404, simpleHtmlMessage(
                         "404 Not Found",
                         "No context found for request"
@@ -88,20 +94,23 @@ public class HttpRunner {
                         "405 Method Not Allowed",
                         "Please use POST with a well-formed input in the request body"
                     ));
-                } else {
-                    try (var in = Input.of(exchange.getRequestBody())) {
-                        var response = new ByteArrayOutputStream();
-                        solver.accept(in, Output.of(response));
-                        sendResponse(exchange, 200, response);
-                    } catch (Exception e) {
-                        sendResponse(exchange, 400, simpleHtmlMessage(
-                            "401 Bad Request",
-                            "Please make sure your input is well-formed"
-                        ));
-                    }
+                } else try (var in = Input.of(exchange.getRequestBody())) {
+                    var response = new ByteArrayOutputStream();
+                    solver.accept(in, Output.of(response));
+                    sendResponse(exchange, 200, response);
+                } catch (Exception e) {
+                    sendResponse(exchange, 400, simpleHtmlMessage(
+                        "400 Bad Request",
+                        "Please make sure your input is well-formed"
+                    ));
                 }
             }
         };
+    }
+    
+    private String getRequestSuffix(HttpExchange exchange) {
+        var prefixSize = exchange.getHttpContext().getPath().length();
+        return exchange.getRequestURI().toString().substring(prefixSize);
     }
     
     private String simpleHtmlMessage(String header, String body) {
