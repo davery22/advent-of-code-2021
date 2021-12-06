@@ -1,2 +1,2 @@
 Manifest-Version: 1.0
-Main-Class: advent.of.code.CliRunner
+Main-Class: advent.of.code.main.Runner

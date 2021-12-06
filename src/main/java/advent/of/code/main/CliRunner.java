@@ -1,4 +1,4 @@
-package advent.of.code;
+package advent.of.code.main;
 
 import advent.of.code.day01.Day01;
 import advent.of.code.day02.Day02;
@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 public class CliRunner {
-    public static void main(String[] args) {
+    public void run() {
         var out = Output.of(System.out);
         try (var in = Input.of(Day01.class, "input.txt")) { Day01.part1(in, out); }
         try (var in = Input.of(Day01.class, "input.txt")) { Day01.part2(in, out); }
