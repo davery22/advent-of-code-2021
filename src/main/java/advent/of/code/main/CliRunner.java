@@ -10,6 +10,7 @@ import advent.of.code.day07.Day07;
 import advent.of.code.day08.Day08;
 import advent.of.code.day09.Day09;
 import advent.of.code.day10.Day10;
+import advent.of.code.day11.Day11;
 import advent.of.code.io.Input;
 import advent.of.code.io.Output;
 
@@ -35,10 +36,12 @@ public class CliRunner {
 //        try (var in = Input.of(Day07.class, "input.txt")) { Day07.part2(in, out); }
 //        try (var in = Input.of(Day08.class, "input.txt")) { Day08.part1(in, out); }
 //        try (var in = Input.of(Day08.class, "input.txt")) { Day08.part2(in, out); }
-        try (var in = Input.of(Day09.class, "input.txt")) { Day09.part1(in, out); }
-        try (var in = Input.of(Day09.class, "input.txt")) { Day09.part2(in, out); }
-        try (var in = Input.of(Day10.class, "input.txt")) { Day10.part1(in, out); }
-        try (var in = Input.of(Day10.class, "input.txt")) { Day10.part2(in, out); }
+//        try (var in = Input.of(Day09.class, "input.txt")) { Day09.part1(in, out); }
+//        try (var in = Input.of(Day09.class, "input.txt")) { Day09.part2(in, out); }
+//        try (var in = Input.of(Day10.class, "input.txt")) { Day10.part1(in, out); }
+//        try (var in = Input.of(Day10.class, "input.txt")) { Day10.part2(in, out); }
+        try (var in = Input.of(Day11.class, "input.txt")) { Day11.part1(in, out); }
+        try (var in = Input.of(Day11.class, "input.txt")) { Day11.part2(in, out); }
     }
     
     /**
