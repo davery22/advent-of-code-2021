@@ -77,7 +77,7 @@ public class Day04 {
     }
     
     private static int getScore(int[][] board, int winningDraw) {
-        int sumUnmarked = Arrays.stream(board)
+        var sumUnmarked = Arrays.stream(board)
             .flatMapToInt(Arrays::stream)
             .filter(v -> v != Integer.MAX_VALUE)
             .sum();

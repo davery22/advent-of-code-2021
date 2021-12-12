@@ -22,11 +22,11 @@ public class Day07 {
     
     private static void solve(Input in, Output out, IntBinaryOperator costFn) {
         var positions = Arrays.stream(in.readLine().split(",")).mapToInt(Integer::parseInt).toArray();
-        var minPos = Arrays.stream(positions).min().getAsInt();
-        var maxPos = Arrays.stream(positions).max().getAsInt();
+        var minPos = Arrays.stream(positions).min().orElseThrow();
+        var maxPos = Arrays.stream(positions).max().orElseThrow();
         var minCost = IntStream.rangeClosed(minPos, maxPos).parallel()
             .map(target -> Arrays.stream(positions).map(pos -> costFn.applyAsInt(pos, target)).sum())
-            .min().getAsInt();
+            .min().orElseThrow();
         out.writeln(minCost);
     }
 }

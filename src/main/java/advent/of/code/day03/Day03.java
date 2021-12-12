@@ -10,16 +10,16 @@ import java.util.stream.Collectors;
 
 public class Day03 {
     public static void part1(Input in, Output out) {
-        var freqs = new int[12];
+        var balances = new int[12];
         in.lines().forEach(binary -> {
             for (var i = 0; i < 12; i++) {
-                freqs[i] += binary.charAt(i) == '0' ? -1 : 1;
+                balances[i] += binary.charAt(i) == '0' ? -1 : 1;
             }
         });
-        var powerConsumption = Arrays.stream(freqs).boxed()
+        var powerConsumption = Arrays.stream(balances).boxed()
             .collect(Collectors.teeing(
-                Collectors.mapping(freq -> freq > 0 ? "1" : "0", Collectors.joining()),
-                Collectors.mapping(freq -> freq > 0 ? "0" : "1", Collectors.joining()),
+                Collectors.mapping(balance -> balance > 0 ? "1" : "0", Collectors.joining()),
+                Collectors.mapping(balance -> balance > 0 ? "0" : "1", Collectors.joining()),
                 (gammaRateBinary, epsilonRateBinary) -> {
                     var gammaRate   = Integer.parseInt(gammaRateBinary, 2);
                     var epsilonRate = Integer.parseInt(epsilonRateBinary, 2);
@@ -41,8 +41,8 @@ public class Day03 {
         var curr = new ArrayList<>(lines);
         for (var i = 0;; i++) {
             var j = i;
-            var freq = curr.stream().mapToInt(binary -> binary.charAt(j) == '0' ? -1 : 1).sum();
-            var keep = freq >= 0 ? hi : lo;
+            var balance = curr.stream().mapToInt(binary -> binary.charAt(j) == '0' ? -1 : 1).sum();
+            var keep = balance >= 0 ? hi : lo;
             curr.removeIf(binary -> binary.charAt(j) != keep);
             if (curr.size() == 1) {
                 return Integer.parseInt(curr.get(0), 2);

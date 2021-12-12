@@ -4,7 +4,6 @@ import advent.of.code.io.Input;
 import advent.of.code.io.Output;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 public class Day06 {
     public static void part1(Input in, Output out) {

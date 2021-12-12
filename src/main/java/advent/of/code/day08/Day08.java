@@ -97,8 +97,7 @@ public class Day08 {
                     .map(Day08::toCharSet)
                     .map(pattern -> IntStream.rangeClosed(0, 9)
                         .filter(i -> pattern.equals(segs[i]))
-                        .findFirst()
-                        .orElseThrow())
+                        .findFirst().orElseThrow())
                     .map(String::valueOf)
                     .collect(Collectors.joining());
                 return Integer.parseInt(outputStr);

@@ -19,8 +19,8 @@ public class Day01 {
         var depths = in.lines().mapToInt(Integer::parseInt).toArray();
         var count = IntStream.range(3, depths.length).parallel()
             .map(i -> {
-                int prev = Arrays.stream(depths, i-3, i).sum();
-                int curr = Arrays.stream(depths, i-2, i+1).sum();
+                var prev = Arrays.stream(depths, i-3, i).sum();
+                var curr = Arrays.stream(depths, i-2, i+1).sum();
                 return curr > prev ? 1 : 0;
             })
             .sum();
