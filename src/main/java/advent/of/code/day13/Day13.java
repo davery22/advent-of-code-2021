@@ -5,19 +5,18 @@ import advent.of.code.io.Output;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Day13 {
     public static void part1(Input in, Output out) {
         var dots = parseDots(in);
-        var folds = parseFolds(in);
-        applyFold(folds.get(0), dots);
+        parseFolds(in).limit(1).forEach(fold -> applyFold(fold, dots));
         out.writeln(dots.size());
     }
     
     public static void part2(Input in, Output out) {
         var dots = parseDots(in);
-        var folds = parseFolds(in);
-        for (var fold : folds) applyFold(fold, dots);
+        parseFolds(in).forEach(fold -> applyFold(fold, dots));
         var dimX = 1 + dots.stream().mapToInt(Dot::x).max().orElseThrow();
         var dimY = 1 + dots.stream().mapToInt(Dot::y).max().orElseThrow();
         var grid = new int[dimY][dimX];
@@ -36,11 +35,10 @@ public class Day13 {
             .collect(Collectors.toSet());
     }
     
-    private static List<Fold> parseFolds(Input in) {
+    private static Stream<Fold> parseFolds(Input in) {
         return in.lines()
             .map(line -> line.substring("fold along ".length()).split("="))
-            .map(parts -> new Fold("x".equals(parts[0]) ? Axis.X : Axis.Y, Integer.parseInt(parts[1])))
-            .collect(Collectors.toList());
+            .map(parts -> new Fold("x".equals(parts[0]) ? Axis.X : Axis.Y, Integer.parseInt(parts[1])));
     }
     
     private static void applyFold(Fold fold, Set<Dot> dots) {
