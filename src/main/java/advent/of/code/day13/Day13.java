@@ -24,9 +24,9 @@ public class Day13 {
         for (var row : grid) out.writeln(Arrays.stream(row).mapToObj(i -> i == 0 ? " " : "█").collect(Collectors.joining()));
     }
     
-    enum Axis { X, Y }
-    record Dot(int x, int y) {}
-    record Fold(Axis axis, int unit) {}
+    private enum Axis { X, Y }
+    private record Dot(int x, int y) {}
+    private record Fold(Axis axis, int unit) {}
     
     private static Set<Dot> parseDots(Input in) {
         return in.lines().takeWhile(line -> !line.isEmpty())

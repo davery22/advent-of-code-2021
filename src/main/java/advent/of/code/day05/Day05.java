@@ -50,7 +50,7 @@ public class Day05 {
         out.writeln(overlap.get());
     }
     
-    private static record Line(int x1, int y1, int x2, int y2) {}
+    private record Line(int x1, int y1, int x2, int y2) {}
     
     private static AtomicIntegerArray[] initGrid(int x, int y) {
         return IntStream.range(0, x)

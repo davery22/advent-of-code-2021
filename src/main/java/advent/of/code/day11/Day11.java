@@ -51,7 +51,7 @@ public class Day11 {
         out.writeln(flashyStep);
     }
     
-    record Pos(int x, int y) {}
+    private record Pos(int x, int y) {}
     
     private static int[][] parseGrid(Input in) {
         return in.lines()
