@@ -22,6 +22,7 @@ import advent.of.code.day19.Day19;
 import advent.of.code.day20.Day20;
 import advent.of.code.day21.Day21;
 import advent.of.code.day22.Day22;
+import advent.of.code.day23.Day23;
 import advent.of.code.io.Input;
 import advent.of.code.io.Output;
 
@@ -73,8 +74,10 @@ public class CliRunner {
 //        try (var in = Input.of(Day20.class, "input.txt")) { Day20.part2(in, out); }
 //        try (var in = Input.of(Day21.class, "input.txt")) { Day21.part1(in, out); }
 //        try (var in = Input.of(Day21.class, "input.txt")) { Day21.part2(in, out); }
-        try (var in = Input.of(Day22.class, "input.txt")) { Day22.part1(in, out); }
-        try (var in = Input.of(Day22.class, "input.txt")) { Day22.part2(in, out); }
+//        try (var in = Input.of(Day22.class, "input.txt")) { Day22.part1(in, out); }
+//        try (var in = Input.of(Day22.class, "input.txt")) { Day22.part2(in, out); }
+        try (var in = Input.of(Day23.class, "input.txt")) { Day23.part1(in, out); }
+        try (var in = Input.of(Day23.class, "input.txt")) { Day23.part2(in, out); }
     }
     
     /**

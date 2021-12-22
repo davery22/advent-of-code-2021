@@ -33,7 +33,7 @@ public class Day21 {
     }
     
     public static void part2(Input in, Output out) {
-        // Idea: Dynamic programming.
+        // Idea: Memoization.
         // The actual number of unique states {posA, posB, scoreA, scoreB} is fairly limited (roughly, 10*10*30*30 = 90000).
         // If we save off results as we encounter new states, we can short-circuit when those states come up again.
         var pos1 = readStartPos(in);
