@@ -24,6 +24,7 @@ import advent.of.code.day21.Day21;
 import advent.of.code.day22.Day22;
 import advent.of.code.day23.Day23;
 import advent.of.code.day24.Day24;
+import advent.of.code.day25.Day25;
 import advent.of.code.io.Input;
 import advent.of.code.io.Output;
 import com.sun.net.httpserver.HttpExchange;
@@ -117,6 +118,8 @@ public class HttpRunner {
         server.createContext("/day/23/part2/", handler(Day23::part2));
         server.createContext("/day/24/part1/", handler(Day24::part1));
         server.createContext("/day/24/part2/", handler(Day24::part2));
+        server.createContext("/day/25/part1/", handler(Day25::part1));
+        server.createContext("/day/25/part2/", handler(Day25::part2));
         
         server.setExecutor(Executors.newVirtualThreadPerTaskExecutor());
         server.start();
